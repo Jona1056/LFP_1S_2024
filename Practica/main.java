@@ -74,6 +74,31 @@ class Personaje {
             }
         }
     }
+     public static void generarReporteHTML() {
+        String rutaCSS = "./styles.css";
+        String rutaHTML = "./reporte.html";
+        try (PrintWriter writer = new PrintWriter(new FileWriter(rutaHTML))) {
+            writer.println("<!DOCTYPE html>");
+            writer.println("<html>");
+            writer.println("<head>");
+            writer.println("<title>Reporte de Personajes</title>");
+            writer.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"" + rutaCSS + "\">");
+            writer.println("</head>");
+            writer.println("<body>");
+            writer.println("<h1>Lista de Personajes</h1>");
+            writer.println("<table>");
+            writer.println("<tr><th>Nombre</th><th>Vida</th><th>Salud</th><th>Ataque</th><th>Defensa</th></tr>");
+            for (Personaje p : personajes) {
+                writer.println("<tr><td>" + p.nombre + "</td><td>" + p.vida + "</td><td>" + p.salud + "</td><td>" + p.ataque + "</td><td>" + p.defensa + "</td></tr>");
+            }
+            writer.println("</table>");
+            writer.println("</body>");
+            writer.println("</html>");
+            System.out.println("Reporte HTML generado correctamente en " + rutaHTML);
+        } catch (IOException e) {
+            System.out.println("Error al generar el reporte HTML: " + e.getMessage());
+        }
+    }
     
 }
 
@@ -99,9 +124,7 @@ public class Ejemplo1 {
                        }
                        case 2 -> Personaje.mostrarPersonajes();
      
-                       case 3 -> {
-                                System.out.println("opcion 3");
-                       }
+                       case 3 -> Personaje.generarReporteHTML();
                        default -> System.out.println("Opcion no valida");
                        
                    }
