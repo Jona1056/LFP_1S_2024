@@ -1,0 +1,49 @@
+{
+    AFD1: {
+        descripcion: "Cadenas numéricas",
+        estados: [S0, S1, S2, S3, S4, S5, S6, S7, S8],
+        alfabeto: ["1", "2", "3"],
+        inicial: S0,
+        finales: [S0, S1, S2, S3, S5, S6, S7, S8],
+        transiciones: {
+            S0 = ("1" -> S1, "2" -> S2, "3" -> S3),
+            S1 = ("2" -> S1),
+            S2 = ("2" -> S1, "3" -> S4),
+            S3 = ("1" -> S5, "2" -> S6, "3" -> S7),
+            S4 = ("1" -> S8, "3" -> S4),
+            S5 = ("1" -> S5),
+            S6 = ("2" -> S6),
+            S7 = ("1" -> S8, "2" -> S6, "3" -> S7)
+        }
+    },
+    AFD2: {
+        descripcion: "Cadenas alfanuméricas",
+        estados: [S0, S1, S2, S3, S4, S5, S6, S7, S8],
+        alfabeto: ["a", "b", "c", "x", "y", "z", "0", "1"],
+        inicial: S0,
+        finales: [S3, S6, S7],
+        transiciones: {
+            S0 = ("a" -> S1, "x" -> S2, "0" -> S3, "1" -> S3),
+            S1 = ("b" -> S4, "x" -> S2),
+            S2 = ("y" -> S5),
+            S3 = ("0" -> S3, "1" -> S3),
+            S4 = ("c" -> S6),
+            S5 = ("z" -> S7),
+            S6 = ("a" -> S8),
+            S7 = ("b" -> S4)
+        }
+    },
+    numero: {
+        descripcion: "Numeros decimales",
+        estados: [S0, S1, S2, S3],
+        alfabeto: ["digit", "."],
+        inicial: S0,
+        finales: [S1, S3],
+        transiciones: {
+            S0 = ("digit" -> S1),
+            S1 = ("digit" -> S1, "." -> S2),
+            S2 = ("digit" -> S3),
+            S3 = ("digit" -> S3)
+        }
+    }
+}
