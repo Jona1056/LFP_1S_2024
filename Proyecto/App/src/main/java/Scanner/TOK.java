@@ -10,9 +10,13 @@ package Scanner;
  */
 public enum TOK {
         KW_descripcion ("KW_descripcion"),
+        KW_estados ("KW_estados"),
+        KW_alfabeto ("KW_alfabero"),
+        TK_id ("TK_id"),
         TK_cadena ("TK_cadena"),
         TK_llaveIzq ("TK_llaveIzq"),
         TK_llaveDer("TK_llaveDer"),
+        TK_dospuntos ("TK_dospuntos"),
         EOF ("EOF");
         
         private String nombre;

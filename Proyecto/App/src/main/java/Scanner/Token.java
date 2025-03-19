@@ -20,7 +20,7 @@ public class Token {
             this.columna = 1;
         }
         
-        public Token(TOK tipo, int linea, int columna, String Lexema){
+        public Token(TOK tipo, int linea, int columna, String lexema){
             this.tipo = tipo;
             this.linea = linea;
             this.columna = columna;

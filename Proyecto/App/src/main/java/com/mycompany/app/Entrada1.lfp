@@ -1,10 +1,11 @@
-{
+{ 
     AFD1: {
         descripcion: "Cadenas numéricas",
         estados: [S0, S1, S2, S3, S4, S5, S6, S7, S8],
         alfabeto: ["1", "2", "3"],
         inicial: S0,
         finales: [S0, S1, S2, S3, S5, S6, S7, S8],
+        palabraprueba: "asdjkfasdj",
         transiciones: {
             S0 = ("1" -> S1, "2" -> S2, "3" -> S3),
             S1 = ("2" -> S1),
