@@ -21,12 +21,10 @@ public class Scanner {
     public ArrayList<Token> tokens = new ArrayList<>();
 
     private Map<String, TOK> reservadas = new TreeMap<>() {{
-        put("descripcion",  TOK.KW_descripcion);
-        put("estados",      TOK.KW_estados);
-        put("alfabeto",     TOK.KW_alfabeto);
-        put("inicial",      TOK.KW_inicial);
-        put("finales",      TOK.KW_finales);
-        put("transiciones", TOK.KW_transiciones);
+        put("world",  TOK.KW_world);
+        put("place",      TOK.KW_places);
+        put("at",   TOK.KW_at);
+      
         
     }};
 
@@ -135,6 +133,16 @@ public class Scanner {
         return new Token(TOK.TK_parentesisDer, char_line, char_col, buffer);
     }
 
+    private Token state15() {
+        while (Character.isDigit(next_char = entrada[pos_char])) {
+            agregarBuffer(next_char);
+        }
+
+        return new Token(TOK.TK_numero, char_line, char_col, buffer);
+    }
+
+
+
     public Token next_token() {
         Token token;
 
@@ -200,6 +208,11 @@ public class Scanner {
             if(next_char == ')') { // Parentesis Derecho
                 iniciarBuffer(next_char);
                 return state14();
+            }
+
+            if (Character.isDigit(next_char)) { // Número
+                iniciarBuffer(next_char);
+                return state15();
             }
 
             // Caracteres Ignorados

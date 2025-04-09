@@ -1,15 +1,16 @@
 package Scanner;
 
 public enum TOK {
-    KW_descripcion   ("KW_descripcion"),
-    KW_estados       ("KW_estados"),
-    KW_alfabeto      ("KW_alfabeto"),
-    KW_inicial       ("KW_inicial"),
-    KW_finales       ("KW_finales"),
-    KW_transiciones  ("KW_transiciones"),
+    KW_world   ("KW_world"),
+    KW_places  ("KW_places"),
+    KW_connect  ("KW_connect"),
+    KW_object   ("KW_object"),
     TK_id            ("TK_id"),
     TK_cadena        ("TK_cadena"),
     TK_flecha        ("TK_flecha"),
+    KW_at            ("KW_at"),
+    KW_to            ("KW_to"),
+    KW_with          ("KW_with"),
     TK_dospuntos     ("TK_dospuntos"),
     TK_coma          ("TK_coma"),
     TK_igual         ("TK_igual"),
@@ -19,6 +20,7 @@ public enum TOK {
     TK_corcheteDer   ("TK_corcheteDer"),
     TK_parentesisIzq ("TK_parentesisIzq"),
     TK_parentesisDer ("TK_parentesisDer"),
+    TK_numero        ("TK_numero"),
     EOF              ("EOF");
 
     private String nombre;

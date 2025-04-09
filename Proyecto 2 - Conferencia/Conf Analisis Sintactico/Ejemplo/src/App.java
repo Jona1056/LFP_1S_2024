@@ -1,5 +1,5 @@
 import Parser.Parser;
-import Parser.SimboloAFD;
+import Parser.Mundo;
 import Scanner.Scanner;
 import Scanner.Token;
 import Utils.Error;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        String input = readInput("./Entrada1.lfp");
+        String input = readInput("../Entrada1.lfp");
 
         // Escanear tokens
         Scanner scanner = new Scanner(input);
@@ -47,25 +47,71 @@ public class App {
                 erroresLexicos.forEach(System.out::println);
             }
 
-            // Imprimir la tabla de símbolos (los AFDs encontrados)
-            System.out.println("\n== TABLA DE SÍMBOLOS ==");
-            for (SimboloAFD afd : parser.tablaSimbolos) {
-                System.out.println("Nombre: " + afd.nombre);
-                System.out.println("Descripción: " + afd.descripcion);
-                System.out.println("Estados: " + afd.estados);
-                System.out.println("Alfabeto: " + afd.alfabeto);
-                System.out.println("Estado Inicial: " + afd.estadoInicial);
-                System.out.println("Estados Finales: " + afd.estadosFinales);
-                System.out.println("Transiciones:");
-                for (String origen : afd.transiciones.keySet()) {
-                    for (SimboloAFD.Transicion t : afd.transiciones.get(origen)) {
-                        System.out.println("  " + origen + " " + t);
-                    }
-                }
-                System.out.println("-------------------------------");
-            }
+            // Imprimir la tabla de símbolos (los mundos encontrados)
+                for (Mundo mundo : parser.tablaSimbolos) {
+            System.out.println("Mundo: " + mundo.nombre);
+            String dot = generarDot(mundo);
+            System.out.println(dot);
+            System.out.println("\n----------------------------\n");
+        }
         }
     }
+
+        public static String generarDot(Mundo mundo) {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("graph G {\n");
+            sb.append("    layout=neato;\n");
+            sb.append("    node [style=filled];\n\n");
+
+            // Diccionario simple tipo lista
+            List<String[]> estiloTipos = List.of(
+                new String[]{"playa", "ellipse", "lightblue"},
+                new String[]{"cueva", "box", "gray"},
+                new String[]{"templo", "octagon", "gold"},
+                new String[]{"jungla", "parallelogram", "forestgreen"},
+                new String[]{"montaña", "triangle", "sienna"},
+                new String[]{"pueblo", "house", "burlywood"},
+                new String[]{"isla", "invtriangle", "lightgoldenrod"},
+                new String[]{"río", "hexagon", "deepskyblue"},
+                new String[]{"volcán", "doublecircle", "orangered"},
+                new String[]{"pantano", "trapezium", "darkseagreen"}
+            );
+
+            // Agregar lugares con estilos
+            for (Mundo.Lugar lugar : mundo.lugares) {
+                String tipo = lugar.tipo.toLowerCase();
+                String shape = "ellipse";
+                String color = "white";
+
+                for (String[] estilo : estiloTipos) {
+                    if (estilo[0].equals(tipo)) {
+                        shape = estilo[1];
+                        color = estilo[2];
+                        break;
+                    }
+                }
+
+                sb.append(String.format(
+                    "    %s [pos=\"%d,%d!\", shape=%s, fillcolor=%s];\n",
+                    lugar.nombre, lugar.x, lugar.y, shape, color
+                ));
+            }
+
+            sb.append("\n");
+
+            // Conexiones
+            for (Mundo.Conexion conexion : mundo.conexiones) {
+                sb.append(String.format(
+                    "    %s -- %s [label=\"%s\"];\n",
+                    conexion.origen, conexion.destino, conexion.medio
+                ));
+            }
+
+            sb.append("}\n");
+            return sb.toString();
+        }
+
 
     private static String readInput(String path) {
         StringBuilder texto = new StringBuilder();
