@@ -113,7 +113,18 @@ public boolean parse() {
 
                 match(TOK.TK_dospuntos);
                 String tipo = currentToken.lexema;
-                match(TOK.TK_id);
+                switch (currentToken.tipo){
+                    case KW_playa:
+                    case KW_pueblo:
+                    case KW_isla:
+                    case KW_cueva:
+                    case KW_templo:
+                        match(currentToken.tipo);
+                        break;
+                    default:
+                        reportError("No se encontro tipo para crear un lugar");
+                }
+             
 
                 match(TOK.KW_at);
                 Posicion pos = parsePosicion();
@@ -136,8 +147,8 @@ public boolean parse() {
 
             String medio = currentToken.lexema;
             match(TOK.TK_cadena);
-
-            System.out.println("Connect → " + origen + " to " + destino + " with " + medio);
+            MundoActual.conexiones.add(new Mundo.Conexion(origen,destino,medio));
+           
         }
 
 

@@ -24,6 +24,14 @@ public class Scanner {
         put("world",  TOK.KW_world);
         put("place",      TOK.KW_places);
         put("at",   TOK.KW_at);
+        put("to", TOK.KW_to);
+        put("with", TOK.KW_with);
+        put("playa", TOK.KW_playa);
+        put("pueblo", TOK.KW_pueblo);
+        put("isla", TOK.KW_isla);
+        put("cueva", TOK.KW_cueva);
+        put("connect", TOK.KW_connect);
+        put("templo", TOK.KW_templo);
       
         
     }};

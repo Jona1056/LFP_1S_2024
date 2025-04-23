@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -60,7 +62,7 @@ public class App {
         public static String generarDot(Mundo mundo) {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("graph G {\n");
+            sb.append("digraph G {\n");
             sb.append("    layout=neato;\n");
             sb.append("    node [style=filled];\n\n");
 
@@ -99,12 +101,30 @@ public class App {
             }
 
             sb.append("\n");
-
+            Map<String, String[]> estiloConexion = new HashMap<>();
+            estiloConexion.put("camino", new String[]{"solid","black"});
+            estiloConexion.put("puente", new String[]{"dotted","gray"});
+            estiloConexion.put("sendero", new String[]{"dashed", "saddlebrown"});
+            estiloConexion.put("carretara",new String[]{"solid", "darkgray"});
+            estiloConexion.put("nado", new String[]{"dashed","deepskyblue"});
+            estiloConexion.put("lancha", new String[]{"solid", "blue"});
+            estiloConexion.put("teleferico", new String[]{"dotted", "purple"});
             // Conexiones
             for (Mundo.Conexion conexion : mundo.conexiones) {
+                String estilo = "solid";
+                String color = "black";
+                String medio = conexion.medio.replace("\"","").trim();
+
+                for (Map.Entry<String, String[]> entry : estiloConexion.entrySet()){
+                    if(entry.getKey().equalsIgnoreCase(medio)){
+                        estilo = entry.getValue()[0];
+                        color = entry.getValue()[1];
+                        break;
+                    }
+                }
                 sb.append(String.format(
-                    "    %s -- %s [label=\"%s\"];\n",
-                    conexion.origen, conexion.destino, conexion.medio
+                    "    %s -> %s [label=%s, style=%s, color=%s];\n",
+                    conexion.origen, conexion.destino, medio, estilo, color
                 ));
             }
 
